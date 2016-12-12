@@ -1,9 +1,50 @@
 <style>
 * {
-    font-size: 200%;
+    font-size: 150%;
 }
 </style>
 <script>
+function handleNativeCall(messageFromNative) {
+    try {
+        var json = JSON.parse(messageFromNative);
+        if (json && typeof json === 'object') {
+            handleJson(json);
+            return;
+        }
+    }
+    catch (ex) {
+        //do nothing for now.
+        console.log("could not parse json: " + ex);
+    }
+
+    //if we couldn't parse the json, just set text of our string test element.
+    webViewSetElementText(messageFromNative);
+}
+
+/**
+ * Sets the value of element with id `elementId` to `value`.
+ */
+function setValue(elementId, value) {
+    var el = document.querySelector('#' + elementId);
+    el.value = value;
+}
+
+/**
+ * Reads in JSON and sets the appropriate fields, if they match
+ */
+function handleJson(json) {
+    var name = json.name || '';
+    var phone = json.phone || '';
+    var email = json.email || '';
+
+    setValue('name', name);
+    setValue('phone', phone);
+    setValue('email', email);
+}
+
+/**
+ * Changes the text of the example div in the webview
+ */
 function webViewSetElementText(newText) {
     if (newText) {
         var testField = document.querySelector('#testField');
@@ -17,26 +58,64 @@ function webViewSetElementText(newText) {
 </script>
 
 <div id="testfield">Hey there</div>
-<button id="sendToNative">Send to Native</button>
+
+<form action="">
+    <input type="text" id="name" placeholder="name" />
+    <input type="tel" id="phone" pattern="\([0-9]{3}\) [0-9]{3}\-[0-9]{4}"
+        placeholder="phone" />
+    <input type="email" id="email" placeholder="email" />
+</form>
+
+<button id="sendJson">Send as JSON</button>
+<button id="sendString">Send as String</button>
 
 <script>
 
 (function() {
 
+    /**
+     * Actually sends an object to the native app
+     */
     function sendToNative(message) {
-        //callNative is defined on the native side.
         webViewSetElementText('Sending to native...');
-        try {
-            window.webkit.messageHandlers.callNative.postMessage(message);
-        }
-        catch (a) {
-            alert('Error');
-        }
+        //`callNative` is defined on the native side.
+        window.webkit.messageHandlers.callNative.postMessage(message);
     }
 
-    var sendToNativeButton = document.querySelector('#sendToNative');
-    sendToNativeButton.onclick = function(ev) {
-        sendToNative('hey from javascript!');
+    /**
+     * Returns the `value` property of the given element, specified by its
+     * `id`.
+     */
+    function getValue(fieldId) {
+        var el = document.querySelector('#' + fieldId);
+        return el.value;
+    }
+
+    var sendAsString = document.querySelector('#sendString');
+
+    /**
+     * Sends name only as string
+     */
+    sendAsString.onclick = function(ev) {
+        var name = getValue('name');
+        sendToNative(name);
+    }
+
+    var sendAsJsonButton = document.querySelector('#sendJson');
+
+    /**
+     * Sends all fields as a JSON object to native
+     */
+    sendAsJsonButton.onclick = function(ev) {
+        var name = getValue('name');
+        var phone = getValue('phone');
+        var email = getValue('email');
+
+        sendToNative({
+            name: name || undefined,
+            phone: phone || undefined,
+            email: email || undefined
+        });
     }
 
 }());

@@ -28,48 +28,69 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iSk-sa-bhV" userLabel="WebView Container">
-                                <rect key="frame" x="16" y="49" width="343" height="557"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter New Text Here" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MXV-nM-zWb">
-                                <rect key="frame" x="16" y="622" width="227" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YjS-ZY-MxE">
-                                <rect key="frame" x="258" y="621" width="94" height="31"/>
+                                <rect key="frame" x="258" y="516" width="94" height="30"/>
                                 <state key="normal" title="Native Button"/>
                                 <connections>
                                     <action selector="nativeButton_touchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wHO-rB-JsD"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iSk-sa-bhV" userLabel="WebView Container">
+                                <rect key="frame" x="16" y="49" width="343" height="459"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter New Text Here" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MXV-nM-zWb">
+                                <rect key="frame" x="16" y="516" width="227" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Debug Log" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7YY-Mj-ghq">
+                                <rect key="frame" x="16" y="554" width="66.5" height="16"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="VZe-4b-DeF">
+                                <rect key="frame" x="16" y="574" width="343" height="89"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="89" id="47z-BA-5Mm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="VZe-4b-DeF" secondAttribute="trailing" id="2dA-sp-1tu"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YjS-ZY-MxE" secondAttribute="trailing" constant="7" id="8TG-2a-MKa"/>
                             <constraint firstItem="YjS-ZY-MxE" firstAttribute="leading" secondItem="MXV-nM-zWb" secondAttribute="trailing" constant="15" id="9pk-Ly-QJn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="iSk-sa-bhV" secondAttribute="trailing" id="BXv-1U-Aiz"/>
+                            <constraint firstItem="VZe-4b-DeF" firstAttribute="top" secondItem="7YY-Mj-ghq" secondAttribute="bottom" constant="4" id="DRb-7S-n7G"/>
                             <constraint firstAttribute="leadingMargin" secondItem="MXV-nM-zWb" secondAttribute="leading" id="EKZ-pO-cTs"/>
+                            <constraint firstItem="MXV-nM-zWb" firstAttribute="top" secondItem="iSk-sa-bhV" secondAttribute="bottom" constant="8" id="MLF-N5-OHh"/>
+                            <constraint firstItem="7YY-Mj-ghq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="OAG-M6-TuG"/>
                             <constraint firstAttribute="leadingMargin" secondItem="j5o-LF-K0V" secondAttribute="leading" id="RG7-LH-rkp"/>
+                            <constraint firstItem="7YY-Mj-ghq" firstAttribute="top" secondItem="MXV-nM-zWb" secondAttribute="bottom" constant="8" id="RRn-ah-mkc"/>
                             <constraint firstAttribute="leadingMargin" secondItem="iSk-sa-bhV" secondAttribute="leading" id="Ufj-Qc-bMn"/>
                             <constraint firstItem="iSk-sa-bhV" firstAttribute="top" secondItem="j5o-LF-K0V" secondAttribute="bottom" constant="8" id="VQc-X9-zHy"/>
-                            <constraint firstItem="YjS-ZY-MxE" firstAttribute="top" secondItem="iSk-sa-bhV" secondAttribute="bottom" constant="15" id="VWx-iX-Bf1"/>
-                            <constraint firstItem="MXV-nM-zWb" firstAttribute="top" secondItem="iSk-sa-bhV" secondAttribute="bottom" constant="16" id="gHx-Ny-JWd"/>
+                            <constraint firstItem="VZe-4b-DeF" firstAttribute="top" secondItem="7YY-Mj-ghq" secondAttribute="bottom" constant="4" id="bcl-BW-hLb"/>
+                            <constraint firstItem="VZe-4b-DeF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="cct-5E-ztV"/>
+                            <constraint firstItem="YjS-ZY-MxE" firstAttribute="top" secondItem="iSk-sa-bhV" secondAttribute="bottom" constant="8" id="fam-f1-ydd"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="VZe-4b-DeF" secondAttribute="bottom" constant="4" id="l62-aF-FWZ"/>
                             <constraint firstItem="j5o-LF-K0V" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="qNH-cS-dZY"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="MXV-nM-zWb" secondAttribute="bottom" constant="15" id="rTg-Q4-v65"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="YjS-ZY-MxE" secondAttribute="bottom" constant="15" id="tR5-G0-Zvn"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="container" destination="iSk-sa-bhV" id="AYU-8s-P5S"/>
+                        <outlet property="logTextView" destination="VZe-4b-DeF" id="ki8-sw-8aH"/>
                         <outlet property="textField" destination="MXV-nM-zWb" id="MFy-tg-gSy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-313" y="-165"/>
+            <point key="canvasLocation" x="-66.400000000000006" y="-134.48275862068968"/>
         </scene>
     </scenes>
 </document>
