@@ -1,0 +1,43 @@
+<style>
+* {
+    font-size: 200%;
+}
+</style>
+<script>
+function webViewSetElementText(newText) {
+    if (newText) {
+        var testField = document.querySelector('#testField');
+        testField.textContent = newText;
+    }
+    else {
+        throw "No text provided, so here's an exception.";
+    }
+}
+
+</script>
+
+<div id="testfield">Hey there</div>
+<button id="sendToNative">Send to Native</button>
+
+<script>
+
+(function() {
+
+    function sendToNative(message) {
+        //callNative is defined on the native side.
+        webViewSetElementText('Sending to native...');
+        try {
+            window.webkit.messageHandlers.callNative.postMessage(message);
+        }
+        catch (a) {
+            alert('Error');
+        }
+    }
+
+    var sendToNativeButton = document.querySelector('#sendToNative');
+    sendToNativeButton.onclick = function(ev) {
+        sendToNative('hey from javascript!');
+    }
+
+}());
+</script>

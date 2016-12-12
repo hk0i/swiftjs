@@ -14,6 +14,7 @@
 		ED8F3BA01DFB7C3500832AF6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED8F3B9E1DFB7C3500832AF6 /* LaunchScreen.storyboard */; };
 		ED8F3BAB1DFB7C3500832AF6 /* SwiftJsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8F3BAA1DFB7C3500832AF6 /* SwiftJsTests.swift */; };
 		ED8F3BB61DFB7C3500832AF6 /* SwiftJsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8F3BB51DFB7C3500832AF6 /* SwiftJsUITests.swift */; };
+		ED8F3BC41DFB807D00832AF6 /* html in Resources */ = {isa = PBXBuildFile; fileRef = ED8F3BC31DFB807D00832AF6 /* html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		ED8F3BB11DFB7C3500832AF6 /* SwiftJsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftJsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED8F3BB51DFB7C3500832AF6 /* SwiftJsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftJsUITests.swift; sourceTree = "<group>"; };
 		ED8F3BB71DFB7C3500832AF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ED8F3BC31DFB807D00832AF6 /* html */ = {isa = PBXFileReference; lastKnownFileType = folder; path = html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 		ED8F3B941DFB7C3500832AF6 /* SwiftJs */ = {
 			isa = PBXGroup;
 			children = (
+				ED8F3BC31DFB807D00832AF6 /* html */,
 				ED8F3B951DFB7C3500832AF6 /* AppDelegate.swift */,
 				ED8F3B971DFB7C3500832AF6 /* ViewController.swift */,
 				ED8F3B991DFB7C3500832AF6 /* Main.storyboard */,
@@ -236,6 +239,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED8F3BA01DFB7C3500832AF6 /* LaunchScreen.storyboard in Resources */,
+				ED8F3BC41DFB807D00832AF6 /* html in Resources */,
 				ED8F3B9D1DFB7C3500832AF6 /* Assets.xcassets in Resources */,
 				ED8F3B9B1DFB7C3500832AF6 /* Main.storyboard in Resources */,
 			);
