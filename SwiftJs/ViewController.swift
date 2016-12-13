@@ -9,6 +9,68 @@
 import UIKit
 import WebKit
 
+
+//TODO: convert all print() statements to use a wrapper class for debug output
+//that will get stripped in release builds.
+
+/**
+ * Wraps handling of native method calls from javascript.
+ *
+ * ## Notes:
+ * Inherits from `NSObject` because the object *must* conform to the
+ * `NSObjectProtocol` to be used with the `WKScriptMessageHandler` protocol.
+ */
+class NativeMethodManager: NSObject {
+  let controller: WKUserContentController
+
+  /**
+   * Acts as an access control to disallow any class methods that have
+   * not been added explicitly and lets us know what methods
+   * have been registered to the method manager.
+   */
+  var nativeMethods: [String] = []
+
+  init(configuration: WKWebViewConfiguration) {
+    self.controller = configuration.userContentController
+  }
+
+  func addMethod(name: String) {
+    if !name.isEmpty {
+      self.controller.add(self, name: name)
+      self.nativeMethods.append(name)
+    }
+    else {
+      assertionFailure("addMethod: `name` cannot be empty")
+    }
+  }
+}
+
+/**
+ * Adds support for script handling on the native side
+ */
+extension NativeMethodManager: WKScriptMessageHandler {
+
+  func userContentController(_ userContentController: WKUserContentController,
+      didReceive message: WKScriptMessage) {
+    if self.nativeMethods.contains(message.name) {
+      switch message.name {
+        //TODO: create enum for method names to avoid typos?
+        case "presentAboutScreen":
+          print("exec present about screen")
+
+        case "updateUi":
+          print("update ui")
+
+        case "callNative":
+          print("new call native :P")
+
+        default:
+          print("attempted to call unknown/unhandled native method: `\(message.name)`")
+      }
+    }
+  }
+}
+
 class ViewController: UIViewController {
 
   @IBOutlet weak var container: UIView!
@@ -26,7 +88,9 @@ class ViewController: UIViewController {
     webFrame.origin.y = 0
 
     let config = WKWebViewConfiguration()
-    config.userContentController.add(self, name: "callNative");
+    let methodManager = NativeMethodManager(configuration: config)
+    methodManager.addMethod(name: "callNative")
+//    config.userContentController.add(self, name: "callNative");
     self.webView = WKWebView(frame: webFrame, configuration: config)
     self.container!.addSubview(webView!)
 
