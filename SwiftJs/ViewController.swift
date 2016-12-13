@@ -13,14 +13,26 @@ import WebKit
 //TODO: convert all print() statements to use a wrapper class for debug output
 //that will get stripped in release builds.
 
-
-typealias NativeMethodHandler = (String) -> Void
+/**
+ * Native method handler which is eventually called from javascript, takes a single `Any` parameter.
+ * `Any` could be one of:
+ *
+ * - `NSNumber`
+ * - `NSString`
+ * - `NSDate`
+ * - `NSArray`
+ * - `NSDictionary`
+ * - `NSNull`
+ *
+ * **see**: [WKScriptMessage.body](https://developer.apple.com/reference/webkit/wkscriptmessage/1417901-body)
+ */
+typealias NativeMethodHandler = (Any) -> Void
 
 /**
  * Wraps handling of native method calls from javascript.
  *
  * ## Notes:
- * Inherits from `NSObject` because the object *must* conform to the
+ * Inherits from `NSObject` because instances of the object *must* conform to the
  * `NSObjectProtocol` to be used with the `WKScriptMessageHandler` protocol.
  */
 class NativeMethodManager: NSObject {
@@ -60,7 +72,7 @@ extension NativeMethodManager: WKScriptMessageHandler {
   func userContentController(_ userContentController: WKUserContentController,
       didReceive message: WKScriptMessage) {
     if self.nativeMethods.keys.contains(message.name) {
-      self.nativeMethods[message.name]!(message.body as! String)
+      self.nativeMethods[message.name]!(message.body)
     }
     else {
       print("Could not find native method `\(message.name)`")
@@ -88,6 +100,7 @@ class ViewController: UIViewController {
     let methodManager = NativeMethodManager(configuration: config)
     methodManager.addMethod(name: "callNative", method: { (message) in
       print("Received `callNative` with message: '\(message)'")
+      NativeCallHandler.handle(message: message);
     })
 //    config.userContentController.add(self, name: "callNative");
     self.webView = WKWebView(frame: webFrame, configuration: config)
@@ -179,18 +192,17 @@ class ViewController: UIViewController {
 /**
  * Adds support for javascript message handling on the native side
  */
-extension ViewController: WKScriptMessageHandler {
+class NativeCallHandler {
 
-  func userContentController(_ userContentController: WKUserContentController,
-      didReceive message: WKScriptMessage) {
-    if let stringDict = message.body as? [String:String] {
+  static func handle(message: Any) {
+    if let stringDict = message as? [String:String] {
       //if the message can be handled as a dictionary, assume `name`, `email`
       //and `phone` json
       self.handleNameEmailPhone(strings: stringDict)
     }
     else {
 //      self.showMessage("name: \(message.name)\nmessage: \(message.body)", title: "A Message From JS!")
-      self.debug("name: \(message.name)\nmessage: \(message.body)")
+      print("message: \(message)")
     }
   }
 
@@ -202,12 +214,12 @@ extension ViewController: WKScriptMessageHandler {
    * - `name: String`
    * - `phone: String`
    */
-  func handleNameEmailPhone(strings: [String:String]) {
+  static func handleNameEmailPhone(strings: [String:String]) {
     let name = strings["name"] ?? "no name"
     let email = strings["email"] ?? "no email"
     let phone = strings["phone"] ?? "no phone"
 
-    self.debug("name, email, phone received!\n"
+    print("name, email, phone received!\n"
       + "\(name)'s email is \(email)\n"
       + "\(name)'s phone is \(phone)\n"
     )
