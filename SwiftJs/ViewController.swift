@@ -19,6 +19,7 @@ class ViewController: UIViewController {
   @IBOutlet weak var logTextView: UITextView!
 
   var webView: WKWebView?
+  var javascript: Javascript?
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -36,7 +37,7 @@ class ViewController: UIViewController {
           print ("Quack, \(name)")
         }
       print("Received `callNative` with message: '\(message)'")
-      NativeCallHandler.handle(message: message);
+      self.debug(NativeCallHandler.handle(message: message))
     })
 
     self.webView = WKWebView(frame: webFrame, configuration: config)
@@ -44,6 +45,7 @@ class ViewController: UIViewController {
 
     let testUrl: URL! = Bundle.main.url(forResource: "index", withExtension: "html", subdirectory: "html")
     self.webView!.loadFileURL(testUrl, allowingReadAccessTo: testUrl)
+    self.javascript = Javascript(webView: self.webView!)
 
   }
 
@@ -53,7 +55,7 @@ class ViewController: UIViewController {
   }
 
   func debug(_ message: String) {
-    logTextView.text = message
+    logTextView.text! += "\(message)\n"
   }
 
   /**
@@ -85,12 +87,12 @@ class ViewController: UIViewController {
 
   @IBAction func nativeButton_touchUpInside(_ sender: UIButton) {
     let newText = self.jsonFromString(self.textField!.text!)
-    Javascript.exec("handleNativeCall(\(newText))", onWebView: self.webView!, completion: { (result: JavascriptResult) in
+    self.javascript!.exec("WebView.handleCallFromNative(\(newText))", completion: { (result: JavascriptResult) in
       if let errorMessage = result.errorMessage {
         self.showMessage(errorMessage, title: "Javascript Error")
       }
       else if let retVal = result.returnValue {
-        self.showMessage("Value: \(retVal)", title: "Javascript Return")
+        self.debug("Javascript Returned Value: '\(retVal)'")
       }
 
       print("result: \(result)")
@@ -120,15 +122,15 @@ class ViewController: UIViewController {
  */
 class NativeCallHandler {
 
-  static func handle(message: Any) {
+  static func handle(message: Any) -> String {
     if let stringDict = message as? [String:String] {
       //if the message can be handled as a dictionary, assume `name`, `email`
       //and `phone` json
-      self.handleNameEmailPhone(strings: stringDict)
+      return self.handleNameEmailPhone(strings: stringDict)
     }
     else {
 //      self.showMessage("name: \(message.name)\nmessage: \(message.body)", title: "A Message From JS!")
-      print("message: \(message)")
+      return "message: \(message)"
     }
   }
 
@@ -140,14 +142,13 @@ class NativeCallHandler {
    * - `name: String`
    * - `phone: String`
    */
-  static func handleNameEmailPhone(strings: [String:String]) {
+  static func handleNameEmailPhone(strings: [String:String]) -> String {
     let name = strings["name"] ?? "no name"
     let email = strings["email"] ?? "no email"
     let phone = strings["phone"] ?? "no phone"
 
-    print("name, email, phone received!\n"
+    return "name, email, phone received!\n"
       + "\(name)'s email is \(email)\n"
       + "\(name)'s phone is \(phone)\n"
-    )
   }
 }

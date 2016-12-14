@@ -41,8 +41,10 @@ extension JavascriptResult: CustomStringConvertible {
  */
 class Javascript {
 
-  init() {
-    assertionFailure("Fully static class, no instantiation needed.")
+  let webView: WKWebView
+
+  init(webView: WKWebView) {
+    self.webView = webView
   }
 
   /**
@@ -50,12 +52,13 @@ class Javascript {
    * in the given `webview`.
    *
    * - parameter code: javascript code to execute
-   * - parameter webview: webview to run the javascript on
+   * - parameter completion: the `JavascriptCompletionHandler` to execute after
+   *                         returning from the js execution.
    */
-  public static func exec(_ code: String, onWebView webview: WKWebView, completion: JavascriptCompletionHandler?) {
+  public func exec(_ code: String, completion: JavascriptCompletionHandler?) {
     print("Executing js:\n    \(code)")
 
-    webview.evaluateJavaScript(code, completionHandler: { (result: Any?, error: Error?) in
+    self.webView.evaluateJavaScript(code, completionHandler: { (result: Any?, error: Error?) in
       if error == nil {
         print("Js execution successful")
         completion?(JavascriptResult(returnValue: result, error: nil, isSuccess: true))

@@ -4,50 +4,59 @@
 }
 </style>
 <script>
-function handleNativeCall(messageFromNative) {
-    if (typeof messageFromNative === 'object') {
-        handleJson(messageFromNative);
-        return;
-    }
 
-    //if we couldn't parse the json, just set text of our string test element.
-    webViewSetElementText(messageFromNative);
-    return 'Banana';
-}
+var WebView = (() => {
 
-/**
- * Sets the value of element with id `elementId` to `value`.
- */
-function setValue(elementId, value) {
-    var el = document.querySelector('#' + elementId);
-    el.value = value;
-}
+        var self = {};
 
-/**
- * Reads in JSON and sets the appropriate fields, if they match
- */
-function handleJson(json) {
-    var name = json.name || '';
-    var phone = json.phone || '';
-    var email = json.email || '';
+        self.handleCallFromNative = (messageFromNative) => {
+            if (typeof messageFromNative === 'object') {
+                self.handleJson(messageFromNative);
+                //demonstration of what returning values to native is like.
+                return 'JSON received.';
+            }
 
-    setValue('name', name);
-    setValue('phone', phone);
-    setValue('email', email);
-}
+            //if we couldn't parse the json, just set text of our string test element.
+            self.setElementText(messageFromNative);
+            return 'String received.';
+        };
 
-/**
- * Changes the text of the example div in the webview
- */
-function webViewSetElementText(newText) {
-    if (newText) {
-        var testField = document.querySelector('#testField');
-        testField.textContent = newText;
-    }
-    else {
-        throw "No text provided, so here's an exception.";
-    }
-}
+        /**
+         * Sets the value of element with id `elementId` to `value`.
+         */
+        self.setValue = (elementId, value) => {
+            var el = document.querySelector('#' + elementId);
+            el.value = value;
+        };
+
+        /**
+         * Reads in JSON and sets the appropriate fields, if they match
+         */
+        self.handleJson = (json) => {
+            var name = json.name || '';
+            var phone = json.phone || '';
+            var email = json.email || '';
+
+            self.setValue('name', name);
+            self.setValue('phone', phone);
+            self.setValue('email', email);
+        };
+
+        /**
+         * Changes the text of the example div in the webview
+         */
+        self.setElementText = (newText) => {
+            if (newText) {
+                var testField = document.querySelector('#testField');
+                testField.textContent = newText;
+            }
+            else {
+                throw "No text provided, so here's an exception.";
+            }
+        };
+
+        return self;
+})();
 
 </script>
 
@@ -71,7 +80,7 @@ function webViewSetElementText(newText) {
      * Actually sends an object to the native app
      */
     function sendToNative(message) {
-        webViewSetElementText('Sending to native...');
+        WebView.setElementText('Sending to native...');
         //`callNative` is defined on the native side.
         window.webkit.messageHandlers.callNative.postMessage(message);
     }
