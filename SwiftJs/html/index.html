@@ -5,16 +5,9 @@
 </style>
 <script>
 function handleNativeCall(messageFromNative) {
-    try {
-        var json = JSON.parse(messageFromNative);
-        if (json && typeof json === 'object') {
-            handleJson(json);
-            return;
-        }
-    }
-    catch (ex) {
-        //do nothing for now.
-        console.log("could not parse json: " + ex);
+    if (typeof messageFromNative === 'object') {
+        handleJson(messageFromNative);
+        return;
     }
 
     //if we couldn't parse the json, just set text of our string test element.

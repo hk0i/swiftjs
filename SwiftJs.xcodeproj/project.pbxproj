@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		ED2DE1FF1E00B68E005E906C /* NativeMethodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2DE1FE1E00B68E005E906C /* NativeMethodManager.swift */; };
+		ED2DE2031E00D0BC005E906C /* Javascript.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2DE2011E00D0BC005E906C /* Javascript.swift */; };
+		ED2DE2041E00D0BC005E906C /* NativeMethodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2DE2021E00D0BC005E906C /* NativeMethodManager.swift */; };
 		ED8F3B961DFB7C3500832AF6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8F3B951DFB7C3500832AF6 /* AppDelegate.swift */; };
 		ED8F3B981DFB7C3500832AF6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8F3B971DFB7C3500832AF6 /* ViewController.swift */; };
 		ED8F3B9B1DFB7C3500832AF6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED8F3B991DFB7C3500832AF6 /* Main.storyboard */; };
@@ -36,7 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		ED2DE1FE1E00B68E005E906C /* NativeMethodManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeMethodManager.swift; sourceTree = "<group>"; };
+		ED2DE2011E00D0BC005E906C /* Javascript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Javascript.swift; sourceTree = "<group>"; };
+		ED2DE2021E00D0BC005E906C /* NativeMethodManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeMethodManager.swift; sourceTree = "<group>"; };
 		ED8F3B921DFB7C3500832AF6 /* SwiftJs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftJs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED8F3B951DFB7C3500832AF6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ED8F3B971DFB7C3500832AF6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -81,17 +83,18 @@
 		ED2DE1FC1E00B68E005E906C /* src */ = {
 			isa = PBXGroup;
 			children = (
-				ED2DE1FD1E00B68E005E906C /* NativeHandling */,
+				ED2DE2001E00D0BC005E906C /* JavascriptBridge */,
 			);
 			path = src;
 			sourceTree = "<group>";
 		};
-		ED2DE1FD1E00B68E005E906C /* NativeHandling */ = {
+		ED2DE2001E00D0BC005E906C /* JavascriptBridge */ = {
 			isa = PBXGroup;
 			children = (
-				ED2DE1FE1E00B68E005E906C /* NativeMethodManager.swift */,
+				ED2DE2011E00D0BC005E906C /* Javascript.swift */,
+				ED2DE2021E00D0BC005E906C /* NativeMethodManager.swift */,
 			);
-			path = NativeHandling;
+			path = JavascriptBridge;
 			sourceTree = "<group>";
 		};
 		ED8F3B891DFB7C3500832AF6 = {
@@ -286,8 +289,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED8F3B981DFB7C3500832AF6 /* ViewController.swift in Sources */,
-				ED2DE1FF1E00B68E005E906C /* NativeMethodManager.swift in Sources */,
 				ED8F3B961DFB7C3500832AF6 /* AppDelegate.swift in Sources */,
+				ED2DE2031E00D0BC005E906C /* Javascript.swift in Sources */,
+				ED2DE2041E00D0BC005E906C /* NativeMethodManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
